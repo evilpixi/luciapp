@@ -1,37 +1,36 @@
-const express = require('express')
+const express = require("express")
+const passport = require("passport")
+const cookieParser = require("cookie-parser")
+const session = require("express-session")
+const morgan = require("morgan")
+const ejsEngine = require("ejs-mate")
+const path = require("path")
+
 const app = express()
+require("./database")
+require("./passport/local-auth")
 
+// Settings
+app.set("views", path.join(__dirname, "views"))
+app.engine("ejs", ejsEngine)
 app.set("view engine", "ejs")
+app.use(express.static(path.join(__dirname, "public")))
 
+app.use(cookieParser("el secreto de lucia"))
+app.use(session({
+    secret: "el secreto de lucia",
+    resave: false,
+    saveUninitialized: false
+}))
 
+// Middlewares
+app.use(morgan("dev"))
+app.use(express.urlencoded({ extended: false }))
+app.use(passport.initialize())
+app.use(passport.session())
 
-app.get("/", (req, res)=> {
-    res.send("la app")
-})
+// Routes
+app.use("/", require("./routes/routes"))
 
-// game
-app.get("/gacha", (req, res)=> {
-    res.send("la app")
-})
-
-// login
-app.get("/login", (req, res)=> {
-    // form de login
-    res.send("hi")
-})
-
-app.post("/login", (req, res)=> {
-    res.send("hi")
-})
-
-// registro
-app.get("/register", (req, res)=> {
-    // form de registro
-    res.send("hi")
-})
-
-app.post("/register", (req, res)=> {
-    res.send("hi")
-})
-
-app.listen(3000, ()=> {console.log("server started on port 3000.")})
+app.set("port", process.env.PORT || 3000)
+app.listen(app.get("port"), ()=> {console.log("server started on port 3000.")})
