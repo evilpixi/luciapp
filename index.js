@@ -5,6 +5,7 @@ const session = require("express-session")
 const morgan = require("morgan")
 const ejsEngine = require("ejs-mate")
 const path = require("path")
+const flash = require("connect-flash")
 
 const app = express()
 require("./database")
@@ -26,11 +27,22 @@ app.use(session({
 // Middlewares
 app.use(morgan("dev"))
 app.use(express.urlencoded({ extended: false }))
+app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use((req, res, next)=> {
+    app.locals.registerMessage = req.flash("registerMessage")
+    next()
+})
 
 // Routes
 app.use("/", require("./routes/routes"))
 
 app.set("port", process.env.PORT || 3000)
-app.listen(app.get("port"), ()=> {console.log("server started on port 3000.")})
+app.listen(app.get("port"), ()=> {
+    console.clear()
+    console.log("+------------------------------+")
+    console.log("| server started on port 3000. |")
+    console.log("+------------------------------+")
+})

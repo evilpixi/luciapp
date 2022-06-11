@@ -11,7 +11,7 @@ router.get("/", (req, res, next) => {
 router.get("/login", (req, res, next)=> {
     res.render("login")
 })
-router.post("/login", passport.authenticate("local", {
+router.post("/login", passport.authenticate("local-login", {
     successRedirect: "/gacha",
     failureRedirect: "/login"
 }))
