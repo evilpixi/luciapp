@@ -33,6 +33,7 @@ app.use(passport.session())
 
 app.use((req, res, next)=> {
     app.locals.registerMessage = req.flash("registerMessage")
+    app.locals.loginMessage = req.flash("loginMessage")
     next()
 })
 

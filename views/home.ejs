@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genshin Gacha</title>
-</head>
-<body>
-    Esta es la app de lucia<br>
-    <button onclick="GoToLogin()">Login</button><br>
-    <button onclick="GoToRegister()">Register</button><br>
+<%- layout('layouts/main.ejs') %>
+Esta es la app de lucia<br>
+<button onclick="GoToLogin()">Login</button><br>
+<button onclick="GoToRegister()">Register</button><br>
 
-    <img src="images/amber.png" alt="">
+<img src="images/amber.png" alt="">
 
-    <script>
-        function GoToLogin() {
-            window.location.href = "/login"
-        }
-        function GoToRegister() {
-            window.location.href = "/register"
-        }
-    </script>
-</body>
-</html>
+<script>
+    function GoToLogin() {
+        window.location.href = "/login"
+    }
+    function GoToRegister() {
+        window.location.href = "/register"
+    }
+</script>

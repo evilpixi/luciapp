@@ -1,8 +1,6 @@
 const passport = require("passport")
-const user = require("../models/user")
-const LocalStrategy = require("passport-local").Strategy
-
 const User = require("../models/user")
+const LocalStrategy = require("passport-local").Strategy
 
 passport.serializeUser((user, done) => {
     done(null, user.id)
@@ -39,8 +37,8 @@ passport.use("local-register", new LocalStrategy({
     newUser.password = newUser.encryptPassword(password)
     newUser.email = req.body.email
 
-    console.log("User Registered!:", newUser)
     await newUser.save()
+    console.log("User Registered!:", newUser)
     done(null, newUser)
 }))
 
@@ -58,12 +56,12 @@ passport.use("local-login", new LocalStrategy({
         return done(null, false, req.flash("loginMessage", message))
     }
 
-    console.log(existingUser)
-    /*if (!existingUser.comparePassword(password)) {
+    if (!existingUser.validatePassword(password))
+    {
         message = "Incorrect Password."
         console.log("ERROR", message)
         return done(null, false, req.flash("loginMessage", message))
-    }*/
+    }
 
     done(null, existingUser)
 }))
