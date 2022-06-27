@@ -7,6 +7,12 @@
     <title>Luciapp</title>
 </head>
 <body>
+    <% if (registerMessage) { %>
+        <div><%= registerMessage %></div>
+    <% } %>
+    <% if (loginMessage) { %>
+        <div><%= loginMessage %></div>
+    <% } %>
     <%- body %>
 </body>
 </html>
